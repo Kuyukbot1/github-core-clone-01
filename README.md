@@ -1,3 +1,9 @@
+[![make.fun](https://make.fun/badge/github-core-clone-01.svg)](https://make.fun/bounty/github-core-clone-01)
+[![rank](https://make.fun/badge/github-core-clone-01/Kuyukbot1/github-core-clone-01/rank.svg)](https://make.fun/bounty/github-core-clone-01)
+[![reward](https://make.fun/badge/github-core-clone-01/Kuyukbot1/github-core-clone-01/reward.svg)](https://make.fun/bounty/github-core-clone-01)
+
+An entry for the [make.fun bounty](https://make.fun/bounty/github-core-clone-01).
+
 # github-core-clone-01 — a GitHub-compatible git forge
 
 A single-process, dependency-free (Node standard library only) implementation of a

@@ -127,9 +127,23 @@ async function main(): Promise<void> {
   const envUrl = process.env.MAKEFUN_ENV_URL;
   if (envUrl === undefined || envUrl === '') die('MAKEFUN_ENV_URL is not set');
   const server = createApp();
+  // Shut the forge down cleanly when the trial harness stops it: drop open
+  // connections, close the listener, then exit 0 instead of being killed
+  // mid-request.
+  process.once('SIGTERM', () => {
+    console.error('[forge] SIGTERM received, shutting down');
+    if (server.listening) {
+      server.closeAllConnections();
+      server.close(() => process.exit(0));
+    } else {
+      process.exit(0);
+    }
+  });
   await new Promise<void>((resolve, reject) => {
     server.once('error', reject);
-    server.listen(0, () => resolve());
+    // Bind IPv4 explicitly: some sandbox containers have no IPv6, and a
+    // dual-stack default listen would leave the forge unreachable there.
+    server.listen(0, '0.0.0.0', () => resolve());
   });
   const address = server.address();
   if (address === null || typeof address === 'string') die('the forge is not listening on a TCP port');
